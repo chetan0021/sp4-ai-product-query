@@ -19,11 +19,14 @@
       --sp4-purple: #21193D;
       --sp4-orange: #E0724F;
       --sp4-maroon: #9B2C2C;
+      --bg-cream: #FDFBF7;
       --bg-white: #FFFFFF;
       --bg-gray: #F4F4F4;
-      --text-main: #1A202C;
-      --text-muted: #718096;
-      --border-light: #E2E8F0;
+      --text-main: #111827;
+      /* Darker for better contrast */
+      --text-muted: #4B5563;
+      /* Darker muted text */
+      --border-light: #E5E7EB;
       --radius-pill: 50px;
       --radius-md: 12px;
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
@@ -37,7 +40,8 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background: var(--bg-white);
+      background: var(--bg-cream);
+      /* Creamy background */
       color: var(--text-main);
       height: 100vh;
       overflow: hidden;
@@ -247,14 +251,18 @@
     .bubble {
       padding: 16px 20px;
       border-radius: 18px;
-      font-size: 14px;
+      font-size: 14.5px;
+      font-weight: 500;
+      /* Slightly bolder for readability */
       line-height: 1.6;
       border: 1px solid var(--border-light);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     }
 
     .msg.ai .bubble {
-      background: #fdfdfd;
+      background: #FFFFFF;
       border-top-left-radius: 4px;
+      color: var(--text-main);
     }
 
     .msg.user .bubble {
@@ -265,7 +273,8 @@
     }
 
     .time {
-      font-size: 10px;
+      font-size: 11px;
+      font-weight: 600;
       color: var(--text-muted);
       margin-top: 6px;
     }
@@ -353,8 +362,30 @@
       }
     }
 
+    .whatsapp-btn {
+      margin-top: auto;
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+
+    .whatsapp-btn:hover {
+      background: #128C7E;
+      transform: translateY(-2px);
+    }
+
     strong {
       color: var(--sp4-orange);
+      font-weight: 700;
     }
   </style>
 </head>
@@ -379,6 +410,10 @@
           <h2 class="section-title">Products</h2>
           <div id="product-list" class="product-list"></div>
         </div>
+
+        <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="whatsapp-btn">
+          <span>💬 Enquire on WhatsApp</span>
+        </a>
       </aside>
 
       <main>
@@ -476,7 +511,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             messages: [
-              { role: 'system', content: `You are the Official AI Assistant for SP4 Ameya. Answer queries about their products: ${JSON.stringify(products)}. Be professional, helpful, and concise.` },
+              { role: 'system', content: `Current product context: ${JSON.stringify(products)}` },
               ...chatHistory.slice(-10)
             ]
           })
