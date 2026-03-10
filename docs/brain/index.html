@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SP4 AI Product Assistant</title>
+  <meta name="description" content="Official AI Assistant for SP4 Ameya product portfolio." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    :root {
+      /* Light Mode Palette (Default) */
+      --sp4-purple: #21193D;
+      --sp4-orange: #E0724F;
+      --bg-main: #FDFBF7;
+      /* Creamy background */
+      --bg-card: #FFFFFF;
+      --bg-sidebar: #F9F7F2;
+      --text-main: #1A1A1A;
+      --text-muted: #4B5563;
+      --border: #E5E7EB;
+      --bubble-ai: #FFFFFF;
+      --bubble-user: #21193D;
+      --bubble-user-text: #FFFFFF;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+      --radius-pill: 50px;
+      --radius-md: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.dark-mode {
+      /* Dark Mode Palette (Midnight Purple) */
+      --sp4-purple: #E0724F;
+      /* Orange accents for dark mode visibility */
+      --sp4-orange: #FDFBF7;
+      --bg-main: #130F26;
+      /* Deep Midnight Purple */
+      --bg-card: #1C1635;
+      --bg-sidebar: #18122D;
+      --text-main: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --border: #2D264D;
+      --bubble-ai: #1C1635;
+      --bubble-user: #E0724F;
+      --bubble-user-text: #130F26;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      height: 100vh;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    /* HEADER */
+    header {
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-card);
+      z-index: 10;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--sp4-purple);
+      letter-spacing: -0.5px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* BURGER MENU (Mobile Only) */
+    .menu-btn {
+      display: none;
+      background: var(--bg-sidebar);
+      border: 1px solid var(--border);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+      transition: var(--transition);
+      z-index: 1001;
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      background: var(--bg-sidebar);
+      border: 1px solid var(--border);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-sidebar);
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+
+    /* SIDEBAR */
+    .content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    aside {
+      width: 320px;
+      background: var(--bg-sidebar);
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+      border-right: 1px solid var(--border);
+      transition: var(--transition);
+      height: 100%;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
+
+    .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+      max-height: calc(100vh - 250px);
+      /* Technical fix for scrolling */
+      padding-right: 5px;
+    }
+
+    /* Scrollbar Styling */
+    .product-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .product-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .product-list::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 10px;
+    }
+
+    .product-item {
+      padding: 16px;
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .product-item:hover {
+      border-color: var(--sp4-orange);
+      transform: translateX(5px);
+      box-shadow: var(--shadow);
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .product-cat {
+      font-size: 11px;
+      font-weight: 700;
+      color: #E0724F;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .whatsapp-btn {
+      margin-top: auto;
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .whatsapp-btn:hover {
+      background: #128C7E;
+      transform: translateY(-3px);
+    }
+
+    /* CHAT AREA */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-card);
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      scroll-behavior: smooth;
+    }
+
+    .welcome {
+      text-align: center;
+      margin: auto;
+      max-width: 550px;
+    }
+
+    .welcome h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      margin-bottom: 15px;
+      color: var(--sp4-purple);
+    }
+
+    .welcome p {
+      color: var(--text-muted);
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .welcome-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .chip {
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--bg-card);
+    }
+
+    .chip:hover {
+      background: var(--sp4-purple);
+      color: white;
+      border-color: var(--sp4-purple);
+    }
+
+    /* BUBBLES */
+    .msg {
+      display: flex;
+      gap: 15px;
+      max-width: 80%;
+    }
+
+    .msg.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 20px;
+      background: var(--bg-sidebar);
+      border: 1px solid var(--border);
+    }
+
+    .msg.ai .avatar {
+      background: var(--sp4-purple);
+      color: white;
+      border: none;
+    }
+
+    .bubble {
+      padding: 18px 22px;
+      border-radius: 20px;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.7;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      transition: var(--transition);
+    }
+
+    .msg.ai .bubble {
+      background: var(--bubble-ai);
+      border-top-left-radius: 4px;
+    }
+
+    .msg.user .bubble {
+      background: var(--bubble-user);
+      color: var(--bubble-user-text);
+      border-top-right-radius: 4px;
+      border-color: transparent;
+    }
+
+    .time {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .msg.user .time {
+      text-align: right;
+    }
+
+    /* INPUT ROW */
+    .input-box {
+      padding: 30px 40px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      background: var(--bg-sidebar);
+      padding: 8px 8px 8px 28px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .input-row:focus-within {
+      border-color: var(--sp4-orange);
+      box-shadow: 0 0 0 3px rgba(224, 114, 79, 0.1);
+    }
+
+    input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    .send-btn {
+      background: #000000;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .send-btn:hover {
+      background: #333333;
+      transform: scale(1.03);
+    }
+
+    /* LOADER */
+    .typing {
+      display: flex;
+      gap: 5px;
+      padding: 5px 0;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--sp4-purple);
+      border-radius: 50%;
+      animation: bounce 1.4s infinite ease-in-out;
+      opacity: 0.7;
+    }
+
+    .dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      80%,
+      100% {
+        transform: scale(0);
+      }
+
+      40% {
+        transform: scale(1.0);
+      }
+    }
+
+    /* MOBILE OPTIMIZATIONS */
+    @media (max-width: 900px) {
+      header {
+        padding: 15px 20px;
+      }
+
+      .brand-title {
+        font-size: 20px;
+      }
+
+      .menu-btn {
+        display: flex;
+      }
+
+      aside {
+        position: fixed;
+        left: -320px;
+        top: 0;
+        bottom: 0;
+        z-index: 1000;
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.1);
+      }
+
+      aside.open {
+        left: 0;
+      }
+
+      .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+      }
+
+      .overlay.open {
+        display: block;
+      }
+
+      #messages {
+        padding: 20px;
+        gap: 20px;
+      }
+
+      .welcome h1 {
+        font-size: 28px;
+      }
+
+      .msg {
+        max-width: 95%;
+      }
+
+      .bubble {
+        padding: 14px 18px;
+        font-size: 14px;
+      }
+
+      .input-box {
+        padding: 20px;
+      }
+
+      .input-row {
+        padding-left: 15px;
+      }
+
+      .send-btn {
+        padding: 10px 20px;
+      }
+
+      .status-badge span {
+        display: none;
+      }
+    }
+
+    strong {
+      color: #E0724F;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body class="light">
+
+  <div class="app">
+    <header>
+      <div class="header-actions">
+        <div class="menu-btn" onclick="toggleMenu()" title="Open Products">
+          <span>☰</span>
+        </div>
+        <div class="logo-area">
+          <div style="font-size: 28px;">🧠</div>
+          <div class="brand-title" id="header-text">SP4 Ameya</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="theme-toggle" onclick="toggleTheme()" title="Switch Theme">
+          <span id="theme-icon">🌙</span>
+        </div>
+        <div class="status-badge" id="status-badge">
+          <div style="width: 8px; height: 8px; background: #48bb78; border-radius: 50%;"></div>
+          <span id="status-text">Assistant Online</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <div class="content">
+      <aside id="sidebar">
+        <div style="flex: 1; overflow: hidden; display: flex; flex-direction: column;">
+          <h2 class="section-title">Innovations</h2>
+          <div id="product-list" class="product-list"></div>
+        </div>
+
+        <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="whatsapp-btn">
+          <span>💬 WhatsApp Enquiry</span>
+        </a>
+      </aside>
+
+      <main>
+        <div id="messages">
+          <div class="welcome" id="welcome">
+            <h1>Welcome to SP4</h1>
+            <p>Explore our ecosystem of MedTech solutions. I'm here to guide you through our clinical-grade innovations.
+            </p>
+            <div class="welcome-chips">
+              <div class="chip" onclick="quickAsk('Overview of SP4 technologies')">📦 Technologies</div>
+              <div class="chip" onclick="quickAsk('Remote healthcare devices')">📡 Remote Access</div>
+              <div class="chip" onclick="quickAsk('Neurological rehabilitation tools')">🏥 Neuro Rehab</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <form onsubmit="handleSend(event)" class="input-row">
+            <input type="text" id="user-input" placeholder="How can SP4 assist you today?" autocomplete="off">
+            <button type="submit" class="send-btn" id="send-btn">Send</button>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    let products = [];
+    let chatHistory = [];
+    let isSending = false;
+
+    // SYSTEM THEME INITIALIZATION
+    function initTheme() {
+      const saved = localStorage.getItem('sp4-theme');
+      if (saved === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('theme-icon').innerText = '☀️';
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.body.classList.toggle('dark-mode');
+      document.getElementById('theme-icon').innerText = isDark ? '☀️' : '🌙';
+      localStorage.setItem('sp4-theme', isDark ? 'dark' : 'light');
+
+      // Theme aware text adjustments
+      const statusText = document.getElementById('status-text');
+      if (isDark) {
+        statusText.innerText = 'Midnight Mode';
+      } else {
+        statusText.innerText = 'Assistant Online';
+      }
+    }
+
+    function toggleMenu() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('open');
+    }
+
+    async function init() {
+      initTheme();
+      try {
+        const res = await fetch('products.json');
+        products = await res.json();
+        renderSidebar();
+      } catch (e) { console.error('Error loading products', e); }
+    }
+
+    function renderSidebar() {
+      const el = document.getElementById('product-list');
+      el.innerHTML = products.map(p => `
+      <div class="product-item" onclick="quickAsk('Insights on ${p.name}'); if(window.innerWidth < 900) toggleMenu();">
+        <div class="product-name">${p.name}</div>
+        <div class="product-cat">${p.category[0]}</div>
+      </div>
+    `).join('');
+    }
+
+    function quickAsk(text) {
+      document.getElementById('user-input').value = text;
+      handleSend({ preventDefault: () => { } });
+    }
+
+    function hideWelcome() {
+      const w = document.getElementById('welcome');
+      if (w) w.style.display = 'none';
+    }
+
+    function appendMsg(role, text) {
+      const wrap = document.getElementById('messages');
+      const div = document.createElement('div');
+      div.className = `msg ${role}`;
+      const avatar = role === 'ai' ? '🤖' : '👤';
+      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      div.innerHTML = `
+      <div class="avatar">${avatar}</div>
+      <div class="body">
+        <div class="bubble">${text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>')}</div>
+        <div class="time">${time}</div>
+      </div>
+    `;
+      wrap.appendChild(div);
+      wrap.scrollTop = wrap.scrollHeight;
+    }
+
+    async function handleSend(e) {
+      e.preventDefault();
+      const input = document.getElementById('user-input');
+      const text = input.value.trim();
+      if (!text || isSending) return;
+
+      hideWelcome();
+      input.value = '';
+      appendMsg('user', text);
+      chatHistory.push({ role: 'user', content: text });
+
+      isSending = true;
+      showTyping();
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: [
+              { role: 'system', content: `Current product context: ${JSON.stringify(products)}` },
+              ...chatHistory.slice(-10)
+            ]
+          })
+        });
+
+        const data = await res.json();
+        hideTyping();
+
+        if (data.error) {
+          const errorMsg = typeof data.error === 'object' ? (data.error.message || 'API Error') : data.error;
+          throw new Error(errorMsg);
+        }
+
+        const reply = data.choices[0].message.content;
+        appendMsg('ai', reply);
+        chatHistory.push({ role: 'assistant', content: reply });
+
+      } catch (err) {
+        hideTyping();
+        appendMsg('ai', '⚠️ Error: ' + err.message);
+      } finally {
+        isSending = false;
+      }
+    }
+
+    let typingDiv = null;
+    function showTyping() {
+      const wrap = document.getElementById('messages');
+      typingDiv = document.createElement('div');
+      typingDiv.className = 'msg ai';
+      typingDiv.innerHTML = `
+      <div class="avatar">🤖</div>
+      <div class="bubble">
+        <div class="typing">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    `;
+      wrap.appendChild(typingDiv);
+      wrap.scrollTop = wrap.scrollHeight;
+    }
+
+    function hideTyping() { if (typingDiv) typingDiv.remove(); }
+
+    init();
+  </script>
+
+</body>
+
+</html>
