@@ -21,13 +21,13 @@
       --sp4-orange: #E0724F;
       --bg-main: #FDFBF7;
       /* Creamy base */
-      --bg-card: rgba(255, 255, 255, 0.7);
-      /* Translucent for glass effect */
-      --bg-sidebar: rgba(249, 247, 242, 0.8);
+      --bg-card: rgba(255, 255, 255, 0.5);
+      /* More translucent */
+      --bg-sidebar: rgba(249, 247, 242, 0.6);
       --text-main: #1A1A1A;
       --text-muted: #4B5563;
-      --border: rgba(0, 0, 0, 0.05);
-      --bubble-ai: rgba(255, 255, 255, 0.5);
+      --border: rgba(0, 0, 0, 0.08);
+      --bubble-ai: rgba(255, 255, 255, 0.6);
       --bubble-user: #21193D;
       --bubble-user-text: #FFFFFF;
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -42,12 +42,12 @@
       --sp4-purple: #E0724F;
       --sp4-orange: #FDFBF7;
       --bg-main: #0D0A1F;
-      --bg-card: rgba(26, 22, 53, 0.7);
-      /* Translucent for glass effect */
-      --bg-sidebar: rgba(24, 18, 45, 0.8);
+      --bg-card: rgba(26, 22, 53, 0.5);
+      /* More translucent */
+      --bg-sidebar: rgba(24, 18, 45, 0.6);
       --text-main: #F3F4F6;
       --text-muted: #9CA3AF;
-      --border: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.08);
       --bubble-ai: rgba(255, 255, 255, 0.03);
       --bubble-user: #E0724F;
       --bubble-user-text: #0D0A1F;
@@ -66,25 +66,26 @@
 
     .blob {
       position: absolute;
-      width: 600px;
-      height: 600px;
-      background: var(--sp4-purple);
-      filter: blur(120px);
+      width: 800px;
+      height: 800px;
+      filter: blur(100px);
       border-radius: 50%;
-      opacity: 0.15;
+      opacity: 0.45;
+      /* Much higher for visibility */
       animation: morph 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
     }
 
     .blob-1 {
-      top: -100px;
-      left: -100px;
+      top: -200px;
+      left: -200px;
       background: var(--sp4-purple);
       animation-duration: 25s;
     }
 
     .blob-2 {
-      bottom: -100px;
-      right: -100px;
+      bottom: -200px;
+      right: -200px;
       background: var(--sp4-orange);
       animation-duration: 30s;
       animation-delay: -5s;
@@ -95,7 +96,8 @@
       left: 50%;
       transform: translate(-50%, -50%);
       background: #9B2C2C;
-      opacity: 0.08;
+      opacity: 0.3;
+      /* Increased from 0.08 */
       animation-duration: 40s;
     }
 
