@@ -109,7 +109,23 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 15px;
+    }
+
+    /* BURGER MENU (Mobile Only) */
+    .menu-btn {
+      display: none;
+      background: var(--bg-sidebar);
+      border: 1px solid var(--border);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+      transition: var(--transition);
+      z-index: 1001;
     }
 
     /* THEME TOGGLE */
@@ -158,6 +174,8 @@
       flex-direction: column;
       padding: 30px;
       border-right: 1px solid var(--border);
+      transition: var(--transition);
+      height: 100%;
     }
 
     .section-title {
@@ -173,6 +191,23 @@
       flex-direction: column;
       gap: 12px;
       overflow-y: auto;
+      max-height: calc(100vh - 250px);
+      /* Technical fix for scrolling */
+      padding-right: 5px;
+    }
+
+    /* Scrollbar Styling */
+    .product-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .product-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .product-list::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 10px;
     }
 
     .product-item {
@@ -445,6 +480,81 @@
       }
     }
 
+    /* MOBILE OPTIMIZATIONS */
+    @media (max-width: 900px) {
+      header {
+        padding: 15px 20px;
+      }
+
+      .brand-title {
+        font-size: 20px;
+      }
+
+      .menu-btn {
+        display: flex;
+      }
+
+      aside {
+        position: fixed;
+        left: -320px;
+        top: 0;
+        bottom: 0;
+        z-index: 1000;
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.1);
+      }
+
+      aside.open {
+        left: 0;
+      }
+
+      .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+      }
+
+      .overlay.open {
+        display: block;
+      }
+
+      #messages {
+        padding: 20px;
+        gap: 20px;
+      }
+
+      .welcome h1 {
+        font-size: 28px;
+      }
+
+      .msg {
+        max-width: 95%;
+      }
+
+      .bubble {
+        padding: 14px 18px;
+        font-size: 14px;
+      }
+
+      .input-box {
+        padding: 20px;
+      }
+
+      .input-row {
+        padding-left: 15px;
+      }
+
+      .send-btn {
+        padding: 10px 20px;
+      }
+
+      .status-badge span {
+        display: none;
+      }
+    }
+
     strong {
       color: #E0724F;
       font-weight: 700;
@@ -456,9 +566,14 @@
 
   <div class="app">
     <header>
-      <div class="logo-area">
-        <div style="font-size: 32px;">🧠</div>
-        <div class="brand-title" id="header-text">SP4 Ameya</div>
+      <div class="header-actions">
+        <div class="menu-btn" onclick="toggleMenu()" title="Open Products">
+          <span>☰</span>
+        </div>
+        <div class="logo-area">
+          <div style="font-size: 28px;">🧠</div>
+          <div class="brand-title" id="header-text">SP4 Ameya</div>
+        </div>
       </div>
       <div class="header-actions">
         <div class="theme-toggle" onclick="toggleTheme()" title="Switch Theme">
@@ -471,15 +586,17 @@
       </div>
     </header>
 
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
     <div class="content">
-      <aside>
-        <div>
+      <aside id="sidebar">
+        <div style="flex: 1; overflow: hidden; display: flex; flex-direction: column;">
           <h2 class="section-title">Innovations</h2>
           <div id="product-list" class="product-list"></div>
         </div>
 
         <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="whatsapp-btn">
-          <span>💬 Enquire on WhatsApp</span>
+          <span>💬 WhatsApp Enquiry</span>
         </a>
       </aside>
 
@@ -527,13 +644,17 @@
       localStorage.setItem('sp4-theme', isDark ? 'dark' : 'light');
 
       // Theme aware text adjustments
-      const headerText = document.getElementById('header-text');
       const statusText = document.getElementById('status-text');
       if (isDark) {
-        statusText.innerText = 'Midnight Guardian Active';
+        statusText.innerText = 'Midnight Mode';
       } else {
         statusText.innerText = 'Assistant Online';
       }
+    }
+
+    function toggleMenu() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('open');
     }
 
     async function init() {
@@ -548,7 +669,7 @@
     function renderSidebar() {
       const el = document.getElementById('product-list');
       el.innerHTML = products.map(p => `
-      <div class="product-item" onclick="quickAsk('Insights on ${p.name}')">
+      <div class="product-item" onclick="quickAsk('Insights on ${p.name}'); if(window.innerWidth < 900) toggleMenu();">
         <div class="product-name">${p.name}</div>
         <div class="product-cat">${p.category[0]}</div>
       </div>
