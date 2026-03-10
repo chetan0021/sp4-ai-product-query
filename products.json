@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Vital Step",
+    "description": "Integrated palm and grip monitoring system with palm pressure mapping and grip strength tracking for comprehensive rehabilitation. App-driven AI provides personalized adaptive therapy based on real-time data. Wireless connectivity enables remote patient monitoring with cloud-based data storage.",
+    "category": ["MedTech"],
+    "features": ["AI analytics", "portable", "rehabilitation"],
+    "url": "https://www.sp4ameya.com/s-projects-side-by-side"
+  },
+  {
+    "name": "Dental Bite Force",
+    "description": "IoT-based rehabilitation device used to measure bite strength. The test measures the force exerted on a pressure sensor using the jaws.",
+    "category": ["Healthcare Device"],
+    "features": ["remote monitoring", "cloud dashboard"],
+    "url": "https://www.sp4ameya.com/s-projects-side-by-side"
+  },
+  {
+    "name": "Foot Pressure",
+    "description": "Foot pressure testing system used to assess foot function by measuring pressure distribution across the foot. Helps healthcare professionals identify functional issues and monitor rehabilitation progress.",
+    "category": ["Healthcare Device", "MedTech"],
+    "features": ["remote monitoring", "cloud dashboard", "portable", "rehabilitation"],
+    "url": "https://www.sp4ameya.com/s-projects-side-by-side"
+  },
+  {
+    "name": "Hand Grip",
+    "description": "IoT-based rehabilitation device used to measure hand strength using a grip dynamometer. Commonly used in physical therapy, sports training, and general fitness assessments.",
+    "category": ["Healthcare Device"],
+    "features": ["remote monitoring", "portable", "rehabilitation"],
+    "url": "https://www.sp4ameya.com/s-projects-side-by-side"
+  },
+  {
+    "name": "Smart Drinking Device",
+    "description": "IoT-based rehabilitation device designed for stroke patients. It measures the angle of deviation while drinking to track hand movement and recovery progress.",
+    "category": ["Healthcare Device"],
+    "features": ["remote monitoring", "portable", "rehabilitation"],
+    "url": "https://www.sp4ameya.com/s-projects-side-by-side"
+  },
+  {
+    "name": "SafeBite: Bite Force Monitoring Device",
+    "description": "Compact and cost-effective IoT device for measuring bite force during dental occlusion. Designed for single bite force evaluation with precise data for dental restoration, periodontal treatment, and orthodontic assessment.",
+    "category": ["Healthcare Device"],
+    "features": ["remote monitoring", "cloud dashboard", "portable", "rehabilitation"],
+    "url": "https://www.sp4ameya.com/s-projects-side-by-side"
+  }
+]
