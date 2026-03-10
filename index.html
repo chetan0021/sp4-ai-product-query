@@ -485,7 +485,13 @@
         const data = await res.json();
         hideTyping();
 
-        if (data.error) throw new Error(data.error);
+        if (data.error) {
+          // If data.error is an object, try to get the message property
+          const errorMsg = typeof data.error === 'object' ?
+            (data.error.message || JSON.stringify(data.error)) :
+            data.error;
+          throw new Error(errorMsg);
+        }
 
         const reply = data.choices[0].message.content;
         appendMsg('ai', reply);
