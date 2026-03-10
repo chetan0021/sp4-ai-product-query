@@ -11,14 +11,21 @@
     - [x] Refactor `index.html` to call local API instead of Groq directly
 - [x] Finalize & Deployment Prep
     - [x] Update `README.md` with Vercel environment variable instructions
-    - [x] Push all changes to GitHub
-- [x] AI Intelligence & Personality
-    - [x] Refine system prompt for "smarter", friendlier responses
-    - [x] Enable natural handling of greetings and general chat
-- [x] UI Polishing & Readability
-    - [x] Change background to creamy color
-    - [x] Darken/Bolden chat typography for better readability
-    - [x] Add "Enquire on WhatsApp" integration
-    - [x] General UI layout improvements
-- [x] Mobile & WhatsApp Future-proofing
     - [x] Update README with future roadmap notes
+- [x] Mobile Responsiveness & Theme Fixes
+    - [x] Implement hamburger menu for mobile
+    - [x] Add mobile drawer (sidebar) logic
+    - [x] Fix/Enhance theme toggle visibility
+    - [x] Adjust typography for "stylish" mobile look
+    - [x] Refine AI to use points/small paragraphs for readability
+    - [x] Verify across viewports and push
+- [x] Animated Background Enhancements
+    - [x] Implement CSS-only morphing background blobs
+    - [x] Add blur and movement keyframes for "glassmorphism" feel
+    - [x] Ensure background contrast in both light and dark modes
+    - [x] Push final animated version to GitHub
+- [x] Keyword Highlighting & Readability
+    - [x] Define CSS classes for Company, Device, and Action keywords
+    - [x] Implement regex-based highlighting in `index.html`
+    - [x] Update system prompt to ensure consistent naming
+    - [x] Sync final version to GitHub

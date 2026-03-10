@@ -3,13 +3,19 @@
 I have completely redesigned and secured the SP4 AI chatbot to make it production-ready and brand-aligned.
 
 ## 📦 Changes Summary (Official Rebrand)
-- **[NEW] Smart AI Personality**: 
-    - Refined the system engine to be more conversational and "smart."
-    - The AI now handles greetings warmly and proactively connects product info rather than just listing it.
-- **[NEW] UI Polishing (Readability & Aesthetics)**: 
-    - **Creamy Theme**: Changed the background to a soft cream (`#FDFBF7`) for a more premium, clinical feel.
-    - **Better Readability**: Darkened the text colors and increased font weights for easier reading.
-    - **WhatsApp Integration**: Added a dedicated "Enquire on WhatsApp" button in the sidebar for direct product enquiries.
+- **[NEW] Dynamic Keyword Highlighting**: 
+    - Specific keywords now pop with signature colors:
+        - **Company Names** (SP4 Ameya, Innovation Labs): Elegant Purple.
+        - **Device Names** (Hand Grip, Vital Step, etc.): Vibrant Orange.
+        - **Actions** (WhatsApp, Enquire): Action Green with underline.
+    - This makes AI responses much scannable and professional.
+- **[NEW] Animated Morphing Background**: 
+    - Added a dynamic, non-boring background with **Slow-Morphing Blobs**.
+- **[NEW] Glassmorphism Effects**: 
+    - The main application and sidebar now use `backdrop-filter: blur(20px)` and translucency to float elegantly over the animated background.
+- **[NEW] Theme Switching (Light/Dark Mode)**: 
+    - **Dual Themes**: Added a stylish toggle button in the header.
+    - **Midnight Mode**: Created a custom "Midnight Purple" dark theme that stays true to the SP4 brand.
 - **[NEW] [api/chat.js](file:///c:/Users/Chetan/Documents/sp4chat/api/chat.js)**: 
     - Moved all AI logic to a **Vercel Serverless Function**.
     - **Update**: Switched to `llama-3.3-70b-versatile` (Llama 3.1 was decommissioned by Groq).
