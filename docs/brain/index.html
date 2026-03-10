@@ -626,6 +626,30 @@
       }
     }
 
+    /* KEYWORD HIGHLIGHTING */
+    .hl-company {
+      color: var(--sp4-purple);
+      font-weight: 800;
+      border-bottom: 1px solid rgba(33, 25, 61, 0.2);
+    }
+
+    .hl-device {
+      color: #E0724F;
+      font-weight: 800;
+    }
+
+    .hl-action {
+      color: #25D366;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    body.dark-mode .hl-company {
+      color: #FDFBF7;
+      border-bottom-color: rgba(253, 251, 247, 0.3);
+    }
+
     strong {
       color: #E0724F;
       font-weight: 700;
@@ -770,10 +794,25 @@
       const avatar = role === 'ai' ? '🤖' : '👤';
       const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+      // Dynamic Keyword Highlighting
+      let formattedText = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>')
+        // Company
+        .replace(/(SP4 Ameya|SP4|Innovation Labs)/gi, '<span class="hl-company">$1</span>')
+        // Action / WhatsApp
+        .replace(/(WhatsApp|connect in WhatsApp|Enquire on WhatsApp|talk to a human)/gi, '<span class="hl-action">$1</span>');
+
+      // Device Highlighting (Dynamic from products list)
+      products.forEach(p => {
+        const regex = new RegExp(`(${p.name})`, 'gi');
+        formattedText = formattedText.replace(regex, '<span class="hl-device">$1</span>');
+      });
+
       div.innerHTML = `
       <div class="avatar">${avatar}</div>
       <div class="body">
-        <div class="bubble">${text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>')}</div>
+        <div class="bubble">${formattedText}</div>
         <div class="time">${time}</div>
       </div>
     `;
