@@ -1,0 +1,24 @@
+# Task: Rebranding & Secure Backend Integration
+
+- [x] Analyze SP4 website aesthetics
+- [x] Redesign UI to match SP4 brand
+    - [x] Remove glassmorphism
+    - [x] Update colors to Dark Purple (#21193D) and Burnt Orange (#E0724F)
+    - [x] Use Serif fonts for headers
+    - [x] Implement pill-shaped buttons and clean inputs
+- [x] Implement Secure API Backend
+    - [x] Create `api/chat.js` for Vercel Serverless Function
+    - [x] Refactor `index.html` to call local API instead of Groq directly
+- [x] Finalize & Deployment Prep
+    - [x] Update `README.md` with Vercel environment variable instructions
+    - [x] Push all changes to GitHub
+- [x] AI Intelligence & Personality
+    - [x] Refine system prompt for "smarter", friendlier responses
+    - [x] Enable natural handling of greetings and general chat
+- [x] UI Polishing & Readability
+    - [x] Change background to creamy color
+    - [x] Darken/Bolden chat typography for better readability
+    - [x] Add "Enquire on WhatsApp" integration
+    - [x] General UI layout improvements
+- [x] Mobile & WhatsApp Future-proofing
+    - [x] Update README with future roadmap notes
